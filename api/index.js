@@ -22,7 +22,8 @@ app.use("/api/auth", authRoutes);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
-  const errorMessage = err.errorResponse.errmsg || "Internal Server Error";
+  const errorMessage =
+    err?.errorResponse?.errmsg || err?.message || "Internal Server Error";
   res.status(statusCode).json({
     success: false,
     statusCode,
