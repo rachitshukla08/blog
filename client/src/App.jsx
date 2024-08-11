@@ -7,6 +7,7 @@ import Signin from "./pages/Signin";
 import Dashboard from "./pages/Dashboard";
 import Projects from "./pages/Projects";
 import Header from "./components/Header";
+import CustomFooter from "./components/CustomFooter";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/projects" element={<Projects />} />
       </Routes>
+      <CustomFooter />
     </BrowserRouter>
   );
 };
