@@ -8,6 +8,7 @@ import {
   signInSuccess,
 } from "../redux/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
+import OAuth from "../components/OAuth";
 
 const Signin = () => {
   const [formData, setFormData] = useState({});
@@ -89,6 +90,7 @@ const Signin = () => {
             >
               {loading ? <Spinner /> : "Sign In"}
             </Button>
+            <OAuth />
           </form>
           <div className="flex gap-2 mt-4 text-sm">
             <span>Don't have an account? </span>
