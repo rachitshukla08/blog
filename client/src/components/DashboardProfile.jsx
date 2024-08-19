@@ -23,7 +23,6 @@ const DashboardProfile = () => {
     const file = e.target.files[0];
     if (file) {
       setImageFile(file);
-      setImageFileUrl(URL.createObjectURL(file));
     }
   };
 
@@ -74,7 +73,7 @@ const DashboardProfile = () => {
           hidden
         />
         <div className="w-32 relative h-32 self-center">
-          {imgFileUploadProgress && (
+          {imgFileUploadProgress && parseInt(imgFileUploadProgress) !== 100 && (
             <CircularProgressbar
               value={imgFileUploadProgress || 0}
               text={`${imgFileUploadProgress}%`}
