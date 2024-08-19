@@ -1,6 +1,6 @@
 import { Alert, Button, TextInput } from "flowbite-react";
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import {
@@ -10,6 +10,11 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { app } from "../firebase";
+import {
+  updateFailure,
+  updateStart,
+  updateSuccess,
+} from "../redux/user/userSlice";
 
 const DashboardProfile = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -18,6 +23,9 @@ const DashboardProfile = () => {
   const filePickerRef = useRef();
   const [imgFileUploadProgress, setImageFileUploadProgress] = useState();
   const [imgFileUploadError, setImageFileUploadError] = useState();
+  const [updateSuccessMsg, setUpdateSuccessMsg] = useState();
+  const [formData, setFormData] = useState({});
+  const dispatch = useDispatch();
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -26,6 +34,36 @@ const DashboardProfile = () => {
     }
   };
 
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    console.log("Submit");
+    e.preventDefault();
+    setUpdateSuccessMsg(null);
+    if (Object.keys(formData).length === 0) return;
+    try {
+      dispatch(updateStart());
+      console.log("Start");
+      const res = await fetch(`/api/user/update/${currentUser._id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      console.log(res);
+      if (!res.ok) {
+        dispatch(updateFailure(data.message));
+      } else {
+        dispatch(updateSuccess(data));
+        console.log("Success");
+        setUpdateSuccessMsg("User profile updated successfully");
+      }
+    } catch (e) {
+      dispatch(updateFailure(e.message));
+    }
+  };
   useEffect(() => {
     if (imageFile) {
       uploadImage();
@@ -56,6 +94,7 @@ const DashboardProfile = () => {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           setImageFileUrl(downloadURL);
+          setFormData({ ...formData, profilePicture: downloadURL });
         });
       }
     );
@@ -64,7 +103,7 @@ const DashboardProfile = () => {
   return (
     <div className="max-w-lg mx-auto p-3 w-full">
       <h1 className="my-7 text-center font-semibold text-3xl">Profile</h1>
-      <form className="flex flex-col gap-4">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
           type="file"
           accept="image/*"
@@ -114,19 +153,27 @@ const DashboardProfile = () => {
           id="username"
           placeholder="username"
           defaultValue={currentUser.username}
+          onChange={handleChange}
         ></TextInput>
         <TextInput
           type="email"
           id="email"
           placeholder="email"
           defaultValue={currentUser.email}
+          onChange={handleChange}
         ></TextInput>
         <TextInput
           type="password"
           id="password"
           placeholder="*********************"
+          onChange={handleChange}
         ></TextInput>
-        <Button type="submit" gradientDuoTone="purpleToPink" outline>
+        <Button
+          type="submit"
+          gradientDuoTone="purpleToPink"
+          outline
+          disabled={Object.keys(formData).length === 0}
+        >
           Update
         </Button>
       </form>
@@ -134,6 +181,11 @@ const DashboardProfile = () => {
         <span className="cursor-pointer hover:text-red-500">Delete</span>
         <span className="cursor-pointer hover:text-red-500">Sign Out</span>
       </div>
+      {updateSuccessMsg && (
+        <Alert color="success" className="mt-5">
+          {updateSuccessMsg}
+        </Alert>
+      )}
     </div>
   );
 };
