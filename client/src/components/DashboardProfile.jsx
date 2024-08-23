@@ -1,4 +1,4 @@
-import { Alert, Button, TextInput } from "flowbite-react";
+import { Alert, Button, Modal, TextInput } from "flowbite-react";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CircularProgressbar } from "react-circular-progressbar";
@@ -11,13 +11,18 @@ import {
 } from "firebase/storage";
 import { app } from "../firebase";
 import {
+  deleteUserFailure,
+  deleteUserStart,
+  deleteUserSuccess,
   updateFailure,
   updateStart,
   updateSuccess,
 } from "../redux/user/userSlice";
+import { HiOutlineExclamationCircle } from "react-icons/hi";
+import { useNavigate } from "react-router-dom";
 
 const DashboardProfile = () => {
-  const { currentUser } = useSelector((state) => state.user);
+  const { currentUser, error } = useSelector((state) => state.user);
   const [imageFile, setImageFile] = useState();
   const [imageFileUrl, setImageFileUrl] = useState();
   const filePickerRef = useRef();
@@ -25,7 +30,9 @@ const DashboardProfile = () => {
   const [imgFileUploadError, setImageFileUploadError] = useState();
   const [updateSuccessMsg, setUpdateSuccessMsg] = useState();
   const [formData, setFormData] = useState({});
+  const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -98,6 +105,22 @@ const DashboardProfile = () => {
         });
       }
     );
+  };
+
+  const handleDeleteUser = async () => {
+    dispatch(deleteUserStart());
+    try {
+      setShowModal(false);
+      const res = await fetch(`api/user/delete/${currentUser._id}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (!res.ok) dispatch(deleteUserFailure(data.message));
+      else dispatch(deleteUserSuccess());
+    } catch (e) {
+      console.log(e);
+      dispatch(deleteUserFailure(e.message));
+    }
   };
 
   return (
@@ -178,7 +201,12 @@ const DashboardProfile = () => {
         </Button>
       </form>
       <div className="text-red-900 dark:text-red-700  flex justify-between mt-5">
-        <span className="cursor-pointer hover:text-red-500">Delete</span>
+        <span
+          className="cursor-pointer hover:text-red-500"
+          onClick={() => setShowModal(true)}
+        >
+          Delete
+        </span>
         <span className="cursor-pointer hover:text-red-500">Sign Out</span>
       </div>
       {updateSuccessMsg && (
@@ -186,6 +214,35 @@ const DashboardProfile = () => {
           {updateSuccessMsg}
         </Alert>
       )}
+      {error && (
+        <Alert color="failure" className="mt-5">
+          {error}
+        </Alert>
+      )}
+      <Modal
+        show={showModal}
+        onClose={() => setShowModal(false)}
+        popup
+        size="md"
+      >
+        <Modal.Header></Modal.Header>
+        <Modal.Body>
+          <div className="text-center">
+            <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+            <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+              Are you sure you want to delete your account?
+            </h3>
+            <div className="flex justify-center gap-4">
+              <Button color="failure" onClick={handleDeleteUser}>
+                {"Yes, I'm sure"}
+              </Button>
+              <Button color="gray" onClick={() => setShowModal(false)}>
+                No, cancel
+              </Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };
