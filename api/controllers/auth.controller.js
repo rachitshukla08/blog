@@ -86,7 +86,7 @@ export const google = async (req, res, next) => {
       const { password: pass, ...rest } = userObject;
       res
         .status(200)
-        .cookeie("access_token", token, {
+        .cookie("access_token", token, {
           httpOnly: true,
         })
         .json(rest);
