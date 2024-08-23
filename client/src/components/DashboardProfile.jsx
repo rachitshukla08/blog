@@ -1,4 +1,4 @@
-import { Alert, Button, Modal, TextInput } from "flowbite-react";
+import { Alert, Button, Modal, Spinner, TextInput } from "flowbite-react";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CircularProgressbar } from "react-circular-progressbar";
@@ -20,10 +20,10 @@ import {
   updateSuccess,
 } from "../redux/user/userSlice";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const DashboardProfile = () => {
-  const { currentUser, error } = useSelector((state) => state.user);
+  const { currentUser, error, loading } = useSelector((state) => state.user);
   const [imageFile, setImageFile] = useState();
   const [imageFileUrl, setImageFileUrl] = useState();
   const filePickerRef = useRef();
@@ -204,10 +204,25 @@ const DashboardProfile = () => {
           type="submit"
           gradientDuoTone="purpleToPink"
           outline
-          disabled={Object.keys(formData).length === 0}
+          disabled={
+            loading ||
+            Object.keys(formData).length === 0 ||
+            (imgFileUploadProgress > 0 && imgFileUploadProgress < 100)
+          }
         >
-          Update
+          {loading ? <Spinner /> : "Update"}
         </Button>
+        {currentUser.isAdmin && (
+          <Link to={"/create-post"}>
+            <Button
+              type="button"
+              gradientDuoTone="purpleToBlue"
+              className="w-full"
+            >
+              Create a post
+            </Button>
+          </Link>
+        )}
       </form>
       <div className="text-red-900 dark:text-red-700  flex justify-between mt-5">
         <span

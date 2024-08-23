@@ -51,7 +51,7 @@ const CustomFooter = () => {
         <Footer.Divider />
         <div className="w-full sm:flex sm:items-center sm:justify-between">
           <Footer.Copyright
-            href="#"
+            as="div"
             by="Rachit"
             year={new Date().getFullYear()}
           />
