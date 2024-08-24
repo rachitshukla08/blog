@@ -199,6 +199,7 @@ const DashboardProfile = () => {
           id="password"
           placeholder="*********************"
           onChange={handleChange}
+          autoComplete="false"
         ></TextInput>
         <Button
           type="submit"
