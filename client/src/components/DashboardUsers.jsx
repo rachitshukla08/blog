@@ -44,7 +44,22 @@ const DashboardUsers = () => {
     }
   };
 
-  const handleDeleteUser = async () => {};
+  const handleDeleteUser = async () => {
+    try {
+      const res = await fetch(`/api/user/delete/${userIdToDelete}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setShowModal(false);
+        setUsers((prev) => prev.filter((user) => user._id !== userIdToDelete));
+      } else {
+        console.log(data.message);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <div

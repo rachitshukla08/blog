@@ -57,12 +57,18 @@ export const updateUser = async (req, res, next) => {
 };
 
 export const deleteUser = async (req, res, next) => {
-  console.log(req);
+  if (req.user.isAdmin)
+    try {
+      const user = await User.findByIdAndDelete(req.params.userId);
+      res.status(200).json({ msg: "User deleted", user });
+    } catch (err) {
+      next(err);
+    }
   if (req.user.id !== req.params.userId) {
     return next(errorHandler(403, "Not allowed to delete"));
   }
   try {
-    await User.findByIdAndDelete(req.params.userId);
+    const user = await User.findByIdAndDelete(req.params.userId);
     res.status(200).json("User deleted");
   } catch (err) {
     next(err);
