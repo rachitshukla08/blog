@@ -127,7 +127,7 @@ const Comment = ({ comment, onLike, onEdit, onDelete }) => {
                     Edit
                   </button>
                   <button
-                    className="hover:text-cyan-500 text-red-500"
+                    className="hover:text-red-500"
                     onClick={() => {
                       onDelete(comment._id);
                     }}

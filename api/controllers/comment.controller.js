@@ -86,3 +86,18 @@ export const deleteComment = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getComments = async (req, res, next) => {
+  try {
+    const startIndex = parseInt(req.query.startIndex) || 0;
+    const limit = parseInt(req.query.limit) || 9;
+    const sortDirection = req.query.sortDirection === "asc" ? 1 : -1;
+    const comments = await Comment.find()
+      .skip(startIndex)
+      .limit(limit)
+      .sort({ updatedAt: sortDirection });
+    return res.status(200).json({ comments: comments });
+  } catch (error) {
+    next(error);
+  }
+};
