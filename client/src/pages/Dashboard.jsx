@@ -20,7 +20,7 @@ const Dashboard = () => {
   }, [location.search]);
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
-      <div className="md:min-w-56">
+      <div className="md:min-w-56 order-1 md:-order-1">
         <DashboardSidebar />
       </div>
       {tab === "profile" && <DashboardProfile />}

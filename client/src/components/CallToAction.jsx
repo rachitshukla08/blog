@@ -3,7 +3,7 @@ import React from "react";
 
 const CallToAction = () => {
   return (
-    <div className="mt-28 flex flex-col sm:flex-row p-3 border border-teal-500 justify-center items-center rounded-tl-3xl rounded-br-3xl text-center">
+    <div className="mt-28 flex flex-col sm:flex-row p-3 border border-teal-500 justify-center items-center rounded-tl-3xl rounded-br-3xl text-center bg-gradient-to-r from-purple-50 via-white to-blue-300 dark:from-[rgb(16,23,42)] dark:to-[rgb(16,23,42)]">
       <div className="flex-1 justify-center flex flex-col">
         <h2>Want to learn more about me?</h2>
         <p className="text-gray-500 my-2">
