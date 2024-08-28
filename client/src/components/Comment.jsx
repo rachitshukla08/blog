@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { FaThumbsUp } from "react-icons/fa";
 import { useSelector } from "react-redux";
 
-const Comment = ({ comment, onLike, onEdit }) => {
+const Comment = ({ comment, onLike, onEdit, onDelete }) => {
   const [user, setUser] = useState(null);
   const { currentUser } = useSelector((state) => state.user);
   const [editedContent, setEditedContent] = useState(comment.content);
@@ -122,9 +122,19 @@ const Comment = ({ comment, onLike, onEdit }) => {
               </p>
               {(currentUser?._id === comment.userId ||
                 currentUser?.isAdmin) && (
-                <button className="hover:text-cyan-500" onClick={handleEdit}>
-                  Edit
-                </button>
+                <>
+                  <button className="hover:text-cyan-500" onClick={handleEdit}>
+                    Edit
+                  </button>
+                  <button
+                    className="hover:text-cyan-500 text-red-500"
+                    onClick={() => {
+                      onDelete(comment._id);
+                    }}
+                  >
+                    Delete
+                  </button>
+                </>
               )}
             </div>
           </>
