@@ -3,6 +3,8 @@ import React from "react";
 import {
   HiAnnotation,
   HiArrowSmRight,
+  HiChartBar,
+  HiChartPie,
   HiDocumentText,
   HiOutlineUserGroup,
   HiUser,
@@ -80,6 +82,17 @@ const DashboardSidebar = () => {
                 as="div"
               >
                 Comments
+              </Sidebar.Item>
+            </Link>
+          )}
+          {currentUser.isAdmin && (
+            <Link to={"/dashboard?tab=dash"}>
+              <Sidebar.Item
+                active={tab === "dash" || !tab}
+                icon={HiChartBar}
+                as="div"
+              >
+                Dashboard
               </Sidebar.Item>
             </Link>
           )}
