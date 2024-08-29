@@ -55,15 +55,3 @@ body {
     background-position: 0 -300px;
   }
 }
-
-.bg-custom-about {
-  background-size: 200%;
-  background-position: 0 -100px;
-}
-@media screen and (min-width: 500px) {
-  .bg-custom-about {
-    background-position: 0 -300px;
-    background-clip: padding-box;
-    background-size: 100%;
-  }
-}
