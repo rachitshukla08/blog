@@ -34,6 +34,7 @@ const Search = () => {
       setLoading(true);
       const searchQuery = urlParams.toString();
       const res = await fetch(`/api/post/getposts?${searchQuery}`);
+      console.log(searchQuery);
       const data = await res.json();
       if (!res.ok) {
         setLoading(false);
@@ -98,7 +99,7 @@ const Search = () => {
 
   return (
     <div className="flex flex-col md:flex-row">
-      <div className="p-7 border-b md:border-r md:min-h-screen border-gray-700">
+      <div className="p-7 border-b md:border-r md:min-h-screen dark:border-gray-700">
         <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
           <div className="flex items-center gap-2">
             <label
