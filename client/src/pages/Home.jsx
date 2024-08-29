@@ -23,7 +23,7 @@ const Home = () => {
     fetchPosts();
   }, []);
   return (
-    <div className="bg-custom">
+    <div className="bg-custom bg-custom-home">
       <div className="flex justify-center ">
         <div className="flex flex-col gap-6 pb-0 pt-28 sm:p-28 sm:pt-44 px-3 max-w-6xl  items-center md:text-left sm:h-svh max-h-fit sm:max-h-[600px] mt-0 ">
           <h1 className="text-4xl text-center md:text-5xl font-bold lg:text-6xl bg-gradient-to-r from-purple-500 to-cyan-600 max-w-fit text-transparent bg-clip-text uppercase">
