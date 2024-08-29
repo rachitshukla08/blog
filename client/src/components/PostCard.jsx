@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
+import moment from "moment";
 
 export default function PostCard({ post }) {
   return (
-    <div className="group relative w-full shadow-md border h-[400px] overflow-hidden rounded-lg sm:w-[430px] transition-all">
+    <div className="group relative w-full shadow-sm  border dark:border-blue-950 dark:shadow-blue-950 h-[400px] overflow-hidden rounded-lg sm:w-[430px] transition-all">
       <Link to={`/post/${post.slug}`}>
         <img
           src={post.image}
@@ -11,7 +12,13 @@ export default function PostCard({ post }) {
         />
       </Link>
       <div className="p-3 flex flex-col gap-2">
-        <p className="text-lg font-semibold line-clamp-2">{post.title}</p>
+        <div className="flex justify-between">
+          <p className="text-lg font-semibold line-clamp-2">{post.title} </p>
+          <p className="text-gray-500 text-xs">
+            {" "}
+            {moment(post.createdAt).fromNow()}
+          </p>
+        </div>
         <span className="italic text-sm">{post.category}</span>
         <Link
           to={`/post/${post.slug}`}

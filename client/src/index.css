@@ -43,3 +43,15 @@ body {
 .dark .post-content a {
   color: rgb(138, 202, 245);
 }
+
+.bg-custom {
+  background: url("assets/background-circle.a428010c.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+@media screen and (min-width: 500px) {
+  .bg-custom {
+    background-position: 0 -300px;
+  }
+}

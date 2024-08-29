@@ -4,7 +4,11 @@ const flowbite = require("flowbite-react/tailwind");
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}", flowbite.content()],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        "hero-pattern": "url('/assets/background-circle.a428010c.png')",
+      },
+    },
   },
   plugins: [flowbite.plugin(), require("tailwind-scrollbar")],
 };
