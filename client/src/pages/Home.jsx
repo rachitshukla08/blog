@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CallToAction from "../components/CallToAction";
 import PostCard from "../components/PostCard";
 import { Button } from "flowbite-react";
@@ -14,6 +14,7 @@ const Home = () => {
     (state) => state.user
   );
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log("FETCHING");
@@ -21,6 +22,7 @@ const Home = () => {
       try {
         const res = await fetch(`/api/post/getposts`);
         const data = await res.json();
+        console.log(data);
         if (res.ok) {
           setPosts(data.posts);
         }
@@ -54,7 +56,7 @@ const Home = () => {
           publicKey: "P2XfdPr5BbF7eXQlO",
         }
       );
-      if (res.ok) {
+      if (res.status === 200) {
         dispatch(setRequestedAdminAccess(true));
         alert(
           "Successfully sent your request. Please wait for some time to get access"
@@ -69,6 +71,14 @@ const Home = () => {
   };
 
   const handleRequestAccess = async () => {
+    if (!currentUser) {
+      navigate("/sign-in");
+      return;
+    }
+    if (currentUser.isAdmin) {
+      alert("Already an admin");
+      return;
+    }
     if (requestedAdminAccess === true) {
       alert("Already requested admin access, please wait");
       return;
