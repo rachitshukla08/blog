@@ -4,6 +4,7 @@ const initialState = {
   currentUser: null,
   error: null,
   loading: null,
+  requestedAdminAccess: false,
 };
 
 const userSlice = createSlice({
@@ -55,6 +56,9 @@ const userSlice = createSlice({
       state.error = null;
       state.loading = false;
     },
+    setRequestedAdminAccess: (state, action) => {
+      state.requestedAdminAccess = action.payload;
+    },
   },
 });
 
@@ -69,6 +73,7 @@ export const {
   deleteUserSuccess,
   deleteUserFailure,
   signOutSuccess,
+  setRequestedAdminAccess,
 } = userSlice.actions;
 
 export default userSlice.reducer;

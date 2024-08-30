@@ -1,18 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import CallToAction from "../components/CallToAction";
 import PostCard from "../components/PostCard";
+import { Button } from "flowbite-react";
+import emailjs from "@emailjs/browser";
+import { useDispatch, useSelector } from "react-redux";
+import { setRequestedAdminAccess } from "../redux/user/userSlice";
 
 const Home = () => {
+  const form = useRef();
   const [posts, setPosts] = useState();
-  console.log(posts);
+  const { currentUser, requestedAdminAccess } = useSelector(
+    (state) => state.user
+  );
+  const dispatch = useDispatch();
+
   useEffect(() => {
     console.log("FETCHING");
     const fetchPosts = async () => {
       try {
         const res = await fetch(`/api/post/getposts`);
         const data = await res.json();
-        console.log(data);
         if (res.ok) {
           setPosts(data.posts);
         }
@@ -22,6 +30,56 @@ const Home = () => {
     };
     fetchPosts();
   }, []);
+
+  const sendEmail = async ({
+    to_name,
+    from_name,
+    message,
+    user_name,
+    user_email,
+  }) => {
+    try {
+      const templateParams = {
+        user_name,
+        to_name,
+        user_email,
+        message,
+        from_name,
+      };
+      const res = await emailjs.send(
+        "service_tt10ckp",
+        "template_6wv7z8g",
+        templateParams,
+        {
+          publicKey: "P2XfdPr5BbF7eXQlO",
+        }
+      );
+      if (res.ok) {
+        dispatch(setRequestedAdminAccess(true));
+        alert(
+          "Successfully sent your request. Please wait for some time to get access"
+        );
+      } else {
+        alert("Some error occurred please try again");
+      }
+    } catch (error) {
+      alert("Some error occurred please try again");
+      console.log(error);
+    }
+  };
+
+  const handleRequestAccess = async () => {
+    if (requestedAdminAccess === true) {
+      alert("Already requested admin access, please wait");
+      return;
+    }
+    const to_name = "Rachit";
+    const { username: user_name, email: user_email } = currentUser;
+    const from_name = "InDepthBlogsRachit";
+    const message = "Please approve my admin request";
+    await sendEmail({ to_name, from_name, message, user_name, user_email });
+  };
+
   return (
     <div className="bg-custom bg-custom-home">
       <div className="flex justify-center ">
@@ -39,11 +97,25 @@ const Home = () => {
           >
             View all posts
           </Link>
+          <div className="flex flex-col items-center gap-2">
+            <p className="text-xs uppercase font-semibold mt-4 text-gray-300 tracking-wider text-center">
+              NOTE: Limited access/features are provided to non admin users.
+            </p>
+            <p className="text-xs uppercase font-semibold text-gray-300 tracking-wider text-center">
+              Please request the admin access by clicking the following button
+            </p>
+          </div>
+          <Button
+            outline
+            gradientDuoTone="purpleToBlue"
+            size="xs"
+            onClick={handleRequestAccess}
+          >
+            Request Access
+          </Button>
         </div>
       </div>
-      <div className="max-w-6xl mx-auto p-3">
-        <CallToAction />
-      </div>
+
       <div className="max-w-7xlxl mx-auto p-3 flex flex-col gap-8 py-7 sm:mt-20 mt-8">
         {posts && posts.length > 0 && (
           <div className=" flex flex-col gap-6">
@@ -61,6 +133,9 @@ const Home = () => {
             </Link>
           </div>
         )}
+      </div>
+      <div className="max-w-6xl mx-auto p-3">
+        <CallToAction />
       </div>
     </div>
   );

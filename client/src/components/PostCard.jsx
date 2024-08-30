@@ -23,7 +23,6 @@ export default function PostCard({ post }) {
         <Button
           gradientDuoTone="purpleToBlue"
           outline
-          rounded
           size="xs"
           className="w-fit uppercase  "
           onClick={() => {
