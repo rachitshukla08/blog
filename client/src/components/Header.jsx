@@ -63,12 +63,19 @@ const Header = () => {
           }}
         />
       </form>
-      <Button className="w-12 h-10 lg:hidden" color="gray" pill type="submit">
+      <Button
+        className="w-12 h-10 lg:hidden"
+        color="gray"
+        pill
+        onClick={() => {
+          navigate("/search");
+        }}
+      >
         <AiOutlineSearch />
       </Button>
       <div className="flex gap-2 md:order-2">
         <Button
-          className="w-12 h-10 hidden sm:inline"
+          className="w-12 h-10 sm:inline"
           color="gray"
           pill
           onClick={() => dispatch(toggleTheme())}
