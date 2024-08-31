@@ -17,12 +17,10 @@ const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("FETCHING");
     const fetchPosts = async () => {
       try {
         const res = await fetch(`/api/post/getposts`);
         const data = await res.json();
-        console.log(data);
         if (res.ok) {
           setPosts(data.posts);
         }
@@ -144,7 +142,7 @@ const Home = () => {
           </div>
         )}
       </div>
-      <div className="max-w-6xl mx-auto p-3">
+      <div className="max-w-6xl mx-auto p-3 sm:mb-28 mb-10">
         <CallToAction />
       </div>
     </div>

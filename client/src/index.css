@@ -40,6 +40,10 @@ body {
   margin-left: 2rem;
 }
 
+.post-content img {
+  margin: 0 auto;
+}
+
 .post-content ol {
   list-style: decimal;
 }

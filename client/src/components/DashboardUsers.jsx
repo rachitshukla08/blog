@@ -10,7 +10,6 @@ const DashboardUsers = () => {
   const [showMore, setShowMore] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [userIdToDelete, setUserIdToDelete] = useState(null);
-  console.log(users);
   useEffect(() => {
     const fetchUsers = async () => {
       try {
