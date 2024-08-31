@@ -23,6 +23,7 @@ const UpdatePost = () => {
   const [publishError, setPublishError] = useState(null);
   const navigate = useNavigate();
   const { postId } = useParams();
+  console.log(formData);
 
   useEffect(() => {
     try {
@@ -47,6 +48,7 @@ const UpdatePost = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setPublishError(null);
+    console.log(formData);
     try {
       const res = await fetch(
         `/api/post/updatepost/${formData._id}/${currentUser._id}`,
@@ -122,13 +124,13 @@ const UpdatePost = () => {
             id="title"
             className="flex-1"
             onChange={(e) => {
-              setFormData({ ...formData, title: e.target.value });
+              setFormData((prev) => ({ ...prev, title: e.target.value }));
             }}
             value={formData?.title}
           />
           <Select
             onChange={(e) => {
-              setFormData({ ...formData, category: e.target.value });
+              setFormData((prev) => ({ ...prev, category: e.target.value }));
             }}
             value={formData?.category}
           >
@@ -173,11 +175,11 @@ const UpdatePost = () => {
         <ReactQuill
           className="h-72 mb-12"
           theme="snow"
+          value={formData?.content}
           onChange={(value) => {
-            setFormData({ ...formData, content: value });
+            setFormData((prev) => ({ ...prev, content: value }));
           }}
           required
-          value={formData?.content}
         />
         <Button type="submit" gradientDuoTone="purpleToBlue">
           Update Post
