@@ -8,12 +8,55 @@ const Projects = () => {
         <p className="text-md text-gray-700 dark:text-gray-400 ">
           Check out my other fun projects:
         </p>
-        <a href="https://neflix-08.netlify.app/">Netflix</a>
-        <a href="https://pizza-shop08.netlify.app/">Pizza Shop</a>
-        <a href="https://mapty08.netlify.app/">Mapty</a>
-        <a href="https://omnifoodonline.netlify.app/">Omnifood</a>
-        <a href="https://dcpcr.netlify.app/">DCPCR</a>
-        <a href="https://nftify-market.netlify.app/">NFTify market</a>
+        <a
+          href="https://neflix-08.netlify.app/"
+          className="hover:text-cyan-600 dark:hover:text-cyan-500"
+          target="_blank"
+        >
+          Netflix
+        </a>
+        <a
+          href="https://pizza-shop08.netlify.app/"
+          className="hover:text-cyan-600 dark:hover:text-cyan-500"
+          target="_blank"
+        >
+          Pizza Shop
+        </a>
+        <a
+          href="https://mapty08.netlify.app/"
+          className="hover:text-cyan-600 dark:hover:text-cyan-500"
+          target="_blank"
+        >
+          Mapty
+        </a>
+        <a
+          href="https://omnifoodonline.netlify.app/"
+          className="hover:text-cyan-600 dark:hover:text-cyan-500"
+          target="_blank"
+        >
+          Omnifood
+        </a>
+        <a
+          href="https://dcpcr.netlify.app/"
+          className="hover:text-cyan-600 dark:hover:text-cyan-500"
+          target="_blank"
+        >
+          DCPCR
+        </a>
+        <a
+          href="https://nftify-market.netlify.app/"
+          className="hover:text-cyan-600 dark:hover:text-cyan-500"
+          target="_blank"
+        >
+          NFTify market
+        </a>
+        <a
+          href="https://flappy-game08.netlify.app/"
+          className="hover:text-cyan-600 dark:hover:text-cyan-500"
+          target="_blank"
+        >
+          Flappy Game
+        </a>
       </div>
     </div>
   );

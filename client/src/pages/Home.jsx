@@ -107,11 +107,11 @@ const Home = () => {
           >
             View all posts
           </Link>
-          <div className="flex flex-col items-center gap-2">
-            <p className="text-xs uppercase font-semibold mt-4 text-gray-300 tracking-wider text-center">
+          <div className="flex flex-col items-center gap-2 text-gray-900">
+            <p className="text-xs uppercase font-semibold mt-4 dark:text-gray-300 tracking-wider text-center">
               NOTE: Limited access/features are provided to non admin users.
             </p>
-            <p className="text-xs uppercase font-semibold text-gray-300 tracking-wider text-center">
+            <p className="text-xs uppercase font-semibold dark:text-gray-300 tracking-wider text-center">
               Please request the admin access by clicking the following button
             </p>
           </div>
