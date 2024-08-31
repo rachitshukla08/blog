@@ -32,6 +32,14 @@ body {
   list-style: disc;
 }
 
+.post-content ul li {
+  margin-left: 2rem;
+}
+
+.post-content ol li {
+  margin-left: 2rem;
+}
+
 .post-content ol {
   list-style: decimal;
 }
